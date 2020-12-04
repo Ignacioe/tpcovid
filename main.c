@@ -8,6 +8,8 @@
 
 #define MAXBUFFER 100
 
+void imprimir_datos_depto (Departamento *depto);
+
 void imprimir_menu(){
     printf("\nFormatos validos de comandos:\n");
     printf("    - Carga de datos:\n        cargar_dataset archivo_entrada.csv\n\n");
@@ -62,19 +64,25 @@ int main(){
                 Registro *registroNuevo = registro_crear(fechaInicio, confirmados, descartados, enEstudio);
                 Departamento *depto = departamento_buscar(datos, deptoNombre);
                 if(!depto){
+                    printf("No existe el depto, lo creo\n");
                     depto = departamento_crear(deptoNombre);
                     datos = database_agregar_depto(datos, depto);
                 }
+                imprimir_datos_depto(depto);
                 Ciudad *ciudad = ciudad_buscar(depto->ciudades, localidadNombre);
                 if(!ciudad){
+                    printf("No existe la ciudad, la creo\n");
                     ciudad = ciudad_crear(localidadNombre);
                     depto->ciudades = depto_agregar_ciudad(depto, ciudad);
                 }
+                imprimir_datos_depto(depto);
                 Registro *registroAntiguo = registro_buscar(ciudad->registros, registroNuevo->fecha);
                 if(registroAntiguo){
+                    printf("Encontre un registro antiguo\n");
                     registro_destruir(registroAntiguo);
                 }
                 ciudad->registros = ciudad_agregar_registro(ciudad, registroNuevo);
+                imprimir_datos_depto(depto);
             }
         }
 
@@ -148,4 +156,22 @@ int main(){
     }
 
     return 0;
+}
+
+void imprimir_datos_depto (Departamento *depto){
+  Ciudad *iter1 = depto->ciudades;
+  Registro *iter2 = NULL;
+  printf("\nImprimiendo datos depto: |%s|\n", depto->nombre);
+  while (iter1 != NULL){
+    printf("\tNombre ciudad: |%s|\n", iter1->nombre);
+    iter2 = iter1->registros;
+    while (iter2 != NULL){
+      printf("\t\tfecha: |%s|\n", iter2->fecha);
+      iter2 = iter2->sig;
+    }
+    iter1 = iter1->sig;
+  }
+
+  free(iter1);
+  free(iter2);
 }

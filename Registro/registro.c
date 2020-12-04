@@ -47,6 +47,7 @@ void registros_imprimir(char *deptoNombre, char *localidadNombre, Registros regi
 Registro *registro_buscar(Registros registros, char *fecha){
     Registro *aux = registros;
     while(aux != NULL){
+      printf("aux->fecha:%s, nuevaFecha:%s\n", aux->fecha, fecha);
       if(strcmp(aux->fecha, fecha) == 0) return aux;
       aux = aux->sig;
     }

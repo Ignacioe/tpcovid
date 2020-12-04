@@ -54,8 +54,9 @@ void ciudades_imprimir(char *deptoNombre, Ciudades ciudades, FILE *fp){
 Ciudad *ciudad_buscar(Ciudades ciudades, char *nombre){
     Ciudad *aux = ciudades;
     while(aux != NULL){
-        if(strcmp(aux->nombre, nombre) == 0) return aux;
-        aux = aux->sig;
+      printf("aux->nombre:%s, nuevoNombre:%s\n", aux->nombre, nombre);
+      if(strcmp(aux->nombre, nombre) == 0) return aux;
+      aux = aux->sig;
     }
     return NULL;
 }

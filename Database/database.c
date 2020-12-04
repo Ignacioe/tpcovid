@@ -69,8 +69,9 @@ Ciudades depto_agregar_ciudad(Departamento *depto, Ciudad *ciudad){
 Departamento *departamento_buscar(Database datos, char *nombre){
     Departamento *aux = datos;
     while(aux != NULL){
-        if(strcmp(aux->nombre, nombre) == 0) return aux;
-        aux = aux->sig;
+      printf("aux->nombre:%s, nuevoNombre:%s\n", aux->nombre, nombre);
+      if(strcmp(aux->nombre, nombre) == 0) return aux;
+      aux = aux->sig;
     }
     return NULL;
 }
